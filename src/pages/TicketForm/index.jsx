@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import edit from '../../assets/edit.png'
@@ -15,13 +15,20 @@ import CommentWrapper from '../../components/CommentWrapper'
 import { fetchOrUpdateTicket } from '../../features/ticket'
 import { createTicket, resetCreation } from '../../features/creation'
 import { modifyTicket, resetModification } from '../../features/modification'
-import { useEffect } from 'react'
 import dayjs from 'dayjs'
 
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { Input } from '../../components/Input'
 import { SelectField } from '../../components/SelectField'
+import {
+  Img,
+  Title,
+  Title2,
+  Paragraph,
+  ButtonBar,
+  StyledInlineErrorMessage,
+} from '../../utils/style/Atoms'
 
 const TitleWrapper = styled.div`
   display: flex;
@@ -29,47 +36,7 @@ const TitleWrapper = styled.div`
   justify-content: space-between;
 `
 
-const Img = styled.img`
-  padding: 15px;
-`
-
-const Title = styled.h1`
-  font: bold;
-`
-
-const Title2 = styled.h2`
-  font: bold;
-`
-
-const Paragraph = styled.p`
-  width: 1000px;
-  &:hover {
-    cursor: pointer;
-    box-shadow: 2px 2px 10px #e2e3e9;
-    background-color: #e6e6e6;
-`
-
-const ButtonBar = styled.div`
-  width: 150px;
-  margin-top: 30px;
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`
-
-const StyledInlineErrorMessage = styled.div`
-  background-color: rgb(255, 245, 245);
-  color: rgb(120, 27, 0);
-  display: block;
-
-  padding: 8px;
-  width: 1030px;
-  margin-top: 0.5rem;
-  white-space: pre-line;
-`
-
-const Ticket = () => {
+const TicketForm = () => {
   const { ticketId } = useParams()
 
   const newTicket = ticketId ? false : true
@@ -139,7 +106,7 @@ const Ticket = () => {
     category: Yup.object().required('Please enter a category'),
   })
 
-  const onSubmit = (values, actions) => {
+  const onSubmit = (values) => {
     const dataComment = {
       writer: 'Emmanuel',
       text: values.comment,
@@ -306,4 +273,4 @@ const Ticket = () => {
     </div>
   )
 }
-export default Ticket
+export default TicketForm

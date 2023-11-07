@@ -6,7 +6,6 @@ import { selectNavigationSwitch } from '../../utils/selector'
 
 const Navigation = () => {
   const navigationSwitch = useSelector(selectNavigationSwitch)
-  console.log(navigationSwitch)
 
   return navigationSwitch === 'tickets' ? (
     <TicketsNavigation />

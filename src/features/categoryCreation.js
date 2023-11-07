@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { selectCategories } from '../utils/selector'
+import { selectCategoryCreation } from '../utils/selector'
+import randomColor from 'randomcolor'
 
-// Le state initial de la feature freelances
+// Le state initial de la feature creation
 const initialState = {
   // le statut permet de suivre l'état de la requête
   status: 'void',
@@ -11,29 +12,45 @@ const initialState = {
   error: null,
 }
 
-export async function fetchOrUpdateCategories(dispatch, getState) {
-  const status = selectCategories(getState()).status
-  if (status === 'pending' || status === 'updating') {
-    // on stop la fonction pour éviter de récupérer plusieurs fois la même donnée
-    return
-  }
-  dispatch(actions.fetching())
-  try {
-    // on utilise fetch pour faire la requête
-    const response = await fetch('http://localhost:5050/category')
-    const data = await response.json()
-    dispatch(actions.resolved(data))
-  } catch (error) {
-    dispatch(actions.rejected(error))
+export function resetCategoryCreation(dispatch, getState) {
+  const status = selectCategoryCreation(getState()).status
+  if (status !== 'void') dispatch(actions.reset())
+}
+
+export function createCategory(newCategory) {
+  return async (dispatch, getState) => {
+    const status = selectCategoryCreation(getState()).status
+    if (status === 'pending' || status === 'updating') {
+      // on stop la fonction pour éviter de créer plusieurs fois la même donnée
+      return
+    }
+    dispatch(actions.creating())
+    try {
+      const response = await fetch('http://localhost:5050/category', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ...newCategory, color: randomColor() }),
+      })
+      const data = await response.json()
+      dispatch(actions.resolved(data))
+    } catch (error) {
+      dispatch(actions.rejected(error))
+    }
   }
 }
 
 const { actions, reducer } = createSlice({
-  name: 'categories',
+  name: 'categoryCreation',
   initialState,
   reducers: {
-    // fetching action & reducer
-    fetching: (draft) => {
+    reset: (draft) => {
+      draft.status = 'void'
+      return
+    },
+    // creating action & reducer
+    creating: (draft) => {
       if (draft.status === 'void') {
         // on passe en pending
         draft.status = 'pending'

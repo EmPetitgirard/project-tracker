@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import store from './utils/store'
 import Home from './pages/Home'
 import Layout from './components/Layout'
-import Ticket from './pages/Ticket'
+import TicketForm from './pages/TicketForm'
 import CategoryForm from './pages/CategoryForm'
 import { ConfirmAlertProvider } from 'react-use-confirm-alert'
 
@@ -18,9 +18,10 @@ root.render(
           <Layout>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/ticket/new" element={<Ticket />} />
-              <Route path="/ticket/:ticketId" element={<Ticket />} />
+              <Route path="/ticket/new" element={<TicketForm />} />
+              <Route path="/ticket/:ticketId" element={<TicketForm />} />
               <Route path="/category/new" element={<CategoryForm />} />
+              <Route path="/category/:categoryId" element={<CategoryForm />} />
             </Routes>
           </Layout>
         </Router>

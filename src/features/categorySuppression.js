@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { selectCategories } from '../utils/selector'
+import { selectCategorySuppression } from '../utils/selector'
 
-// Le state initial de la feature freelances
+// Le state initial de la feature modification
 const initialState = {
   // le statut permet de suivre l'état de la requête
   status: 'void',
@@ -11,29 +11,49 @@ const initialState = {
   error: null,
 }
 
-export async function fetchOrUpdateCategories(dispatch, getState) {
-  const status = selectCategories(getState()).status
-  if (status === 'pending' || status === 'updating') {
-    // on stop la fonction pour éviter de récupérer plusieurs fois la même donnée
-    return
-  }
-  dispatch(actions.fetching())
-  try {
-    // on utilise fetch pour faire la requête
-    const response = await fetch('http://localhost:5050/category')
-    const data = await response.json()
-    dispatch(actions.resolved(data))
-  } catch (error) {
-    dispatch(actions.rejected(error))
+export function resetCategorySuppression(dispatch, getState) {
+  const status = selectCategorySuppression(getState()).status
+  if (status !== 'void') dispatch(actions.reset())
+}
+
+export function deleteCategory(categoryId) {
+  return async (dispatch, getState) => {
+    const status = selectCategorySuppression(getState()).status
+    if (status === 'pending' || status === 'updating') {
+      // on stop la fonction pour éviter de récupérer plusieurs fois la même donnée
+      return
+    }
+    dispatch(actions.delete())
+    try {
+      if (categoryId) {
+        const response = await fetch(
+          `http://localhost:5050/category/${categoryId}`,
+          {
+            method: 'DELETE',
+          },
+        )
+        const data = await response.json()
+        dispatch(actions.resolved(data))
+      } else {
+        const error = 'CategoryId is undefined'
+        dispatch(actions.rejected(error))
+      }
+    } catch (error) {
+      dispatch(actions.rejected(error))
+    }
   }
 }
 
 const { actions, reducer } = createSlice({
-  name: 'categories',
+  name: 'categorySuppression',
   initialState,
   reducers: {
-    // fetching action & reducer
-    fetching: (draft) => {
+    reset: (draft) => {
+      draft.status = 'void'
+      return
+    },
+    // modifying action & reducer
+    delete: (draft) => {
       if (draft.status === 'void') {
         // on passe en pending
         draft.status = 'pending'

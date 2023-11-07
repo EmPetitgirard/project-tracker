@@ -2,7 +2,13 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import TicketWrapper from '../TicketWrapper'
-import { AbstractWrapper, Nav, NavList } from '../../utils/style/Atoms'
+import {
+  AbstractWrapper,
+  Loader,
+  LoaderWrapper,
+  Nav,
+  NavList,
+} from '../../utils/style/Atoms'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   selectTickets,
@@ -15,14 +21,9 @@ import { useEffect } from 'react'
 import { fetchOrUpdateTickets } from '../../features/tickets'
 import { fetchOrUpdateCategories } from '../../features/categories'
 import { resetSuppression } from '../../features/suppression'
-import { Loader } from '../../utils/style/Atoms'
 import Select from 'react-select'
 import * as navigationSwitchActions from '../../features/navigationSwitch'
 
-const LoaderWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`
 const EmptyWrapper = styled.div`
   width: 230px;
   height: 50px;

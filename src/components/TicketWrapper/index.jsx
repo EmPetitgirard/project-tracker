@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { AbstractWrapper } from '../../utils/style/Atoms'
+import { AbstractWrapper, TopWrapper } from '../../utils/style/Atoms'
 import styled, { css } from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteTicket } from '../../features/suppression'
@@ -7,14 +7,7 @@ import bin from '../../assets/bin.png'
 import { useConfirmAlert } from 'react-use-confirm-alert'
 import { selectCategories } from '../../utils/selector'
 
-const TopWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`
-
-const CategoryWrapper = styled.div`
+const ColoredCategoryWrapper = styled.div`
   width: 200px;
   ${({ color }) =>
     color &&
@@ -53,16 +46,6 @@ const TicketWrapper = (props) => {
 
   const categories = useSelector(selectCategories)
 
-  const findColorCategory = (id) => {
-    let colors =
-      categories &&
-      categories.data &&
-      categories.data.filter((category) => {
-        return category._id === id
-      })
-    return colors ? colors[0].color : '#f7f3e9'
-  }
-
   if (categories.status === 'rejected') {
     return <span>Il y a un problème</span>
   }
@@ -86,12 +69,12 @@ const TicketWrapper = (props) => {
           <div title={ticket.requirements}>
             {truncateRequirements(ticket.requirements)}
           </div>
-          <CategoryWrapper
+          <ColoredCategoryWrapper
             title={ticket.category.title}
-            color={findColorCategory(ticket.category._id)}
+            color={ticket.category.color}
           >
             {truncateRequirements(ticket.category.title)}
-          </CategoryWrapper>
+          </ColoredCategoryWrapper>
         </Link>
       </AbstractWrapper>
     </li>
