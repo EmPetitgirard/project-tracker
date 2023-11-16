@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { selectCategoryModification } from '../utils/selector'
+import Userfront from '@userfront/toolkit/react'
 
 // Le state initial de la feature modification
 const initialState = {
@@ -33,6 +34,7 @@ export function modifyCategory(categoryId, editedCategory) {
             body: JSON.stringify(editedCategory),
             headers: {
               'Content-Type': 'application/json',
+              Authorization: `Bearer ${Userfront.accessToken()}`,
             },
           },
         )

@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { selectModification } from '../utils/selector'
+import Userfront from '@userfront/toolkit/react'
 
 // Le state initial de la feature modification
 const initialState = {
@@ -33,6 +34,7 @@ export function modifyTicket(ticketId, editedTicket) {
             body: JSON.stringify(editedTicket),
             headers: {
               'Content-Type': 'application/json',
+              Authorization: `Bearer ${Userfront.accessToken()}`,
             },
           },
         )

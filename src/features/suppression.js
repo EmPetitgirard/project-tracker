@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { selectSuppression } from '../utils/selector'
+import Userfront from '@userfront/toolkit/react'
 
 // Le state initial de la feature modification
 const initialState = {
@@ -30,6 +31,10 @@ export function deleteTicket(ticketId) {
           `http://localhost:5050/record/${ticketId}`,
           {
             method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${Userfront.accessToken()}`,
+            },
           },
         )
         const data = await response.json()

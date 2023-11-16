@@ -55,11 +55,11 @@ const CategoriesNavigation = () => {
         <Nav>
           <NavList>
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/home">Home</Link>
             </li>
             <li>
               <Link
-                to="/"
+                to="/home"
                 onClick={() => dispatch(navigationSwitchActions.toggle())}
               >
                 Tickets

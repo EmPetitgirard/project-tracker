@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { selectCategories } from '../utils/selector'
+import Userfront from '@userfront/toolkit/react'
 
 // Le state initial de la feature freelances
 const initialState = {
@@ -20,7 +21,13 @@ export async function fetchOrUpdateCategories(dispatch, getState) {
   dispatch(actions.fetching())
   try {
     // on utilise fetch pour faire la requête
-    const response = await fetch('http://localhost:5050/category')
+    const response = await fetch('http://localhost:5050/category', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Userfront.accessToken()}`,
+      },
+    })
     const data = await response.json()
     dispatch(actions.resolved(data))
   } catch (error) {

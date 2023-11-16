@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Header from '../Header'
 import Navigation from '../Navigation'
+import Userfront, { LoginForm } from '@userfront/toolkit/react'
 
 const Wrapper = styled.div`
   @media (min-width: 700px) {
@@ -29,7 +30,7 @@ const Main = styled.main`
 `
 
 const Layout = ({ children }) => {
-  return (
+  return Userfront.accessToken() ? (
     <React.Fragment>
       <Header />
       <Wrapper>
@@ -37,6 +38,8 @@ const Layout = ({ children }) => {
         <Main>{children}</Main>
       </Wrapper>
     </React.Fragment>
+  ) : (
+    <LoginForm />
   )
 }
 export default Layout

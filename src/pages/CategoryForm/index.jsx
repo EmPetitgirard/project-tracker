@@ -29,6 +29,8 @@ import {
   ButtonBar,
   StyledInlineErrorMessage,
 } from '../../utils/style/Atoms'
+import Userfront from '@userfront/toolkit/react'
+import { Navigate } from 'react-router-dom'
 
 const EditWrapper = styled.div`
   display: flex;
@@ -107,7 +109,7 @@ const CategoryForm = () => {
     return <span>Il y a un problème</span>
   }
 
-  return (
+  return Userfront.user.hasRole('admin') ? (
     <div>
       <Formik
         enableReinitialize
@@ -172,6 +174,9 @@ const CategoryForm = () => {
         }}
       </Formik>
     </div>
+  ) : (
+    <Navigate to="/home" />
   )
 }
+
 export default CategoryForm

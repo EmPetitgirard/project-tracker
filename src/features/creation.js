@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { selectCreation } from '../utils/selector'
+import Userfront from '@userfront/toolkit/react'
 
 // Le state initial de la feature creation
 const initialState = {
@@ -29,6 +30,7 @@ export function createTicket(newTicket) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${Userfront.accessToken()}`,
         },
         body: JSON.stringify(newTicket),
       })

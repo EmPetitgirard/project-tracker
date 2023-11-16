@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom'
 import { AbstractWrapper, TopWrapper } from '../../utils/style/Atoms'
 import styled, { css } from 'styled-components'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { deleteTicket } from '../../features/suppression'
 import bin from '../../assets/bin.png'
 import { useConfirmAlert } from 'react-use-confirm-alert'
-import { selectCategories } from '../../utils/selector'
 
 const ColoredCategoryWrapper = styled.div`
   width: 200px;
@@ -42,12 +41,6 @@ const TicketWrapper = (props) => {
     if (isConfirmed) {
       remove(ticketId)
     }
-  }
-
-  const categories = useSelector(selectCategories)
-
-  if (categories.status === 'rejected') {
-    return <span>Il y a un problème</span>
   }
 
   return (

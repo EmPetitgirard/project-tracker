@@ -1,11 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import logo from '../../assets/poseidon.jpg'
+import { LogoutButton } from '@userfront/toolkit/react'
 
 const HeaderBar = styled.header`
   width: 100%;
   padding: 0.5em 1em;
   display: flex;
+  justify-content: space-between;
   height: 100px;
   position: fixed;
   align-items: center;
@@ -21,11 +23,26 @@ const Title = styled.div`
   text-shadow: 3px 3px 1px black;
 `
 
+const LogoWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+`
+
+const LogoutWrapper = styled.div`
+  width: 100px;
+  margin: 50px;
+`
+
 const Header = () => {
   return (
     <HeaderBar>
-      <img src={logo} alt="Project Tracker Logo" height="100" />
-      <Title>Team Poseidon</Title>
+      <LogoWrapper>
+        <img src={logo} alt="Project Tracker Logo" height="100" />
+        <Title>Team Poseidon</Title>
+      </LogoWrapper>
+      <LogoutWrapper>
+        <LogoutButton />
+      </LogoutWrapper>
     </HeaderBar>
   )
 }

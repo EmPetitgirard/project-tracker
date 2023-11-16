@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { selectCategory } from '../utils/selector'
+import Userfront from '@userfront/toolkit/react'
 
 // le state initial de cette feature est un objet vide
 const initialState = {
@@ -19,6 +20,13 @@ export function fetchOrUpdateCategory(categoryId) {
     try {
       const response = await fetch(
         `http://localhost:5050/category/${categoryId}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${Userfront.accessToken()}`,
+          },
+        },
       )
       const data = await response.json()
       dispatch(actions.resolved(categoryId, data))

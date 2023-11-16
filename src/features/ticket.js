@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { selectTicket } from '../utils/selector'
+import Userfront from '@userfront/toolkit/react'
 
 // le state initial de cette feature est un objet vide
 const initialState = {
@@ -17,7 +18,13 @@ export function fetchOrUpdateTicket(ticketId) {
     }
     dispatch(actions.fetching(ticketId))
     try {
-      const response = await fetch(`http://localhost:5050/record/${ticketId}`)
+      const response = await fetch(`http://localhost:5050/record/${ticketId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Userfront.accessToken()}`,
+        },
+      })
       const data = await response.json()
       dispatch(actions.resolved(ticketId, data))
     } catch (error) {

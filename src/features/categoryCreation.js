@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { selectCategoryCreation } from '../utils/selector'
 import randomColor from 'randomcolor'
+import Userfront from '@userfront/toolkit/react'
 
 // Le state initial de la feature creation
 const initialState = {
@@ -30,6 +31,7 @@ export function createCategory(newCategory) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${Userfront.accessToken()}`,
         },
         body: JSON.stringify({ ...newCategory, color: randomColor() }),
       })

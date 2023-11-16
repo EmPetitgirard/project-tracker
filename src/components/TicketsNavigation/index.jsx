@@ -23,6 +23,7 @@ import { fetchOrUpdateCategories } from '../../features/categories'
 import { resetSuppression } from '../../features/suppression'
 import Select from 'react-select'
 import * as navigationSwitchActions from '../../features/navigationSwitch'
+import Userfront from '@userfront/toolkit/react'
 
 const EmptyWrapper = styled.div`
   width: 230px;
@@ -51,7 +52,7 @@ const TicketsNavigation = () => {
     dispatch(fetchOrUpdateTickets)
     if (suppression.status === 'resolved') {
       dispatch(resetSuppression)
-      navigate('/')
+      navigate('/home')
     } else if (suppression.status === 'rejected') {
       alert('Il y a un problème')
     }
@@ -68,6 +69,8 @@ const TicketsNavigation = () => {
   }
 
   const tickets = useSelector(selectTickets)
+
+  console.log(tickets)
 
   const categories = useSelector(selectCategories)
 
@@ -143,16 +146,18 @@ const TicketsNavigation = () => {
         <Nav>
           <NavList>
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/home">Home</Link>
             </li>
-            <li>
-              <Link
-                to="/category/new"
-                onClick={() => dispatch(navigationSwitchActions.toggle())}
-              >
-                Categories
-              </Link>
-            </li>
+            {Userfront.user.hasRole('admin') && (
+              <li>
+                <Link
+                  to="/category/new"
+                  onClick={() => dispatch(navigationSwitchActions.toggle())}
+                >
+                  Categories
+                </Link>
+              </li>
+            )}
             <li>
               <Link to="/ticket/new">
                 <AbstractWrapper>New Ticket</AbstractWrapper>
