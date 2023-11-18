@@ -73,9 +73,11 @@ const CategoriesNavigation = () => {
             <li>
               <EmptyWrapper />
             </li>
-            {categories.data.map((category) => (
-              <CategoryWrapper category={category} />
-            ))}
+            {React.Children.toArray(
+              categories.data.map((category) => (
+                <CategoryWrapper category={category} />
+              )),
+            )}
           </NavList>
         </Nav>
       )}

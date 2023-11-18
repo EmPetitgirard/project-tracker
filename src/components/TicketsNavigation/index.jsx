@@ -70,8 +70,6 @@ const TicketsNavigation = () => {
 
   const tickets = useSelector(selectTickets)
 
-  console.log(tickets)
-
   const categories = useSelector(selectCategories)
 
   const [selected, setSelected] = useState(null)
@@ -175,7 +173,10 @@ const TicketsNavigation = () => {
                 />
               </SelectWrapper>
             </li>
-            {array && array.map((ticket) => <TicketWrapper ticket={ticket} />)}
+            {array &&
+              React.Children.toArray(
+                array.map((ticket) => <TicketWrapper ticket={ticket} />),
+              )}
           </NavList>
         </Nav>
       )}
