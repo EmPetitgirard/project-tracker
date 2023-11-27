@@ -27,3 +27,5 @@ export const selectCategory = (categoryId) => (state) => {
 }
 
 export const selectCategoryModification = (state) => state.categoryModification
+
+export const selectConfirm = (state) => state.confirm

@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { deleteTicket } from '../../features/suppression'
 import bin from '../../assets/bin.png'
-import { useConfirmAlert } from 'react-use-confirm-alert'
+import useConfirm from '../../utils/hooks/useConfirm'
 
 const ColoredCategoryWrapper = styled.div`
   width: 200px;
@@ -30,13 +30,19 @@ const TicketWrapper = (props) => {
     dispatch(deleteTicket(ticketId))
   }
 
-  const confirmAlert = useConfirmAlert()
+  const { confirm } = useConfirm()
 
   async function handleDelete(ticketId) {
+    /*
     const isConfirmed = await confirmAlert({
       title: 'Do you really want to delete this ticket?',
       message: 'This action cannot be undone',
-    })
+    }) */
+
+    const isConfirmed = await confirm(
+      'Do you really want to delete this ticket?',
+      'This action cannot be undone',
+    )
 
     if (isConfirmed) {
       remove(ticketId)

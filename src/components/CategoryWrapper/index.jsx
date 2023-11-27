@@ -3,8 +3,8 @@ import { deleteCategory } from '../../features/categorySuppression'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectTickets } from '../../utils/selector'
 import bin from '../../assets/bin.png'
-import { useConfirmAlert } from 'react-use-confirm-alert'
 import { Link } from 'react-router-dom'
+import useConfirm from '../../utils/hooks/useConfirm'
 
 const CategoryWrapper = (props) => {
   const { category } = props
@@ -28,14 +28,14 @@ const CategoryWrapper = (props) => {
     dispatch(deleteCategory(categoryId))
   }
 
-  const confirmAlert = useConfirmAlert()
+  const { confirm } = useConfirm()
 
   async function handleDelete(categoryId) {
     // ramener les tickets et verifier si ils n'ont pas le meme categoryId
-    const isConfirmed = await confirmAlert({
-      title: 'Do you really want to delete this category?',
-      message: 'This action cannot be undone',
-    })
+    const isConfirmed = await confirm(
+      'Do you really want to delete this category?',
+      'This action cannot be undone',
+    )
 
     if (isConfirmed) {
       remove(categoryId)

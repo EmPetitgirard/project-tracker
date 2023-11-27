@@ -9,6 +9,7 @@ import categorySuppressionReducer from '../features/categorySuppression'
 import categoryCreationReducer from '../features/categoryCreation'
 import categoryReducer from '../features/category'
 import categoryModificationReducer from '../features/categoryModification'
+import confirmReducer from '../features/confirm'
 import { configureStore } from '@reduxjs/toolkit'
 
 export default configureStore({
@@ -24,5 +25,6 @@ export default configureStore({
     categoryCreation: categoryCreationReducer,
     category: categoryReducer,
     categoryModification: categoryModificationReducer,
+    confirm: confirmReducer,
   },
 })

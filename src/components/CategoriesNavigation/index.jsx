@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import * as navigationSwitchActions from '../../features/navigationSwitch'
 import {
@@ -32,16 +32,19 @@ const CategoriesNavigation = () => {
   const creation = useSelector(selectCategoryCreation)
   const modification = useSelector(selectCategoryModification)
 
+  const navigate = useNavigate()
+
   useEffect(() => {
     // On envoie le thunk à dispatch
     // C'est Redux-Thunk qui va s'occuper de l'exécuter pour nous
     dispatch(fetchOrUpdateCategories)
     if (suppression.status === 'resolved') {
       dispatch(resetCategorySuppression)
+      navigate('/category/new')
     } else if (suppression.status === 'rejected') {
       alert('Il y a un problème')
     }
-  }, [dispatch, suppression, creation, modification])
+  }, [dispatch, suppression, creation, modification, navigate])
 
   const categories = useSelector(selectCategories)
 
