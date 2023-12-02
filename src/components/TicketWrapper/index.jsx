@@ -33,12 +33,6 @@ const TicketWrapper = (props) => {
   const { confirm } = useConfirm()
 
   async function handleDelete(ticketId) {
-    /*
-    const isConfirmed = await confirmAlert({
-      title: 'Do you really want to delete this ticket?',
-      message: 'This action cannot be undone',
-    }) */
-
     const isConfirmed = await confirm(
       'Do you really want to delete this ticket?',
       'This action cannot be undone',

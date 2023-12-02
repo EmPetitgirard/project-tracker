@@ -90,4 +90,6 @@ const { actions, reducer } = createSlice({
   },
 })
 
+export const { fetching, rejected, resolved } = actions
+
 export default reducer

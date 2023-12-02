@@ -138,7 +138,7 @@ const TicketsNavigation = () => {
     <>
       {tickets.status === 'pending' || tickets.status === 'void' ? (
         <LoaderWrapper>
-          <Loader />
+          <Loader data-testid="loader" />
         </LoaderWrapper>
       ) : (
         <Nav>
